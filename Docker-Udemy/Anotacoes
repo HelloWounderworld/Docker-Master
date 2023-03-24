@@ -1,0 +1,377 @@
+O Docker:
+  O que é Docker?:
+    - O docker a funcionalidade dela se basea muito em containers. Basicamente, a sua funcionalidade pode ser tirado em analogia como um transporte de navios que carregam os containers. Ou seja, vc tem o seu ambiente local onde vc cria a sua aplicação, um exemplo do mundo concreto seria uma loja que estivesse criando algum imóvel próprio, em seguida vc pega essa sua aplicação e gera uma imagem dela, no moundo concreto é o momento em que vc está empacotando o imóvel que vc produziu, para, em seguida, vc enviar esse seu image para um container, que é o momento em que vc pega o pacote envia para um correio com o endereço de um outro país e que necessita que a carga seja transportada via um navio, para depois disso vc conseguir lançar isso em um ambiente de produção para que outras pessoas consigam consumir, que é o momento em que o teu pacote chega ao destinatário e é consumido. Basicamente, a analogia acima é de como funciona o docker, sendo que a única diferença com o exemplo concreto de uma loja, é que esse processo todo até chegar ao consumidor quem estará realizando seria vc no computador que vc estiver utilizando.
+
+  DockerHub:
+    - Recomendamos em criar uma conta no Docker Hub, pois dentro dela existem, praticamente, todas as bibliotecas de linguagens de programação que pode ser acionado num container.
+    - Isso significa que vc não precisa ter o linux instalado dentro da sua máquina. Bastando o Docker instalado e com uma conta no Docker Hub, será possível rodar um container com a linguagem que vc quiser dentro dela.
+
+  Implementação Simples:
+    - Antes de seguir para os próximos passos, precisamos nos certificar que o nodejs está instalado no seu computador.
+    - Um exemplo simples, de Hello World, que podemos realizar para isso é criando um app.js como foi feito acima. No caso, estaremos realizando alguma aplicação em nodejs. Assim, pelo terminal, podemos colocar o comando "node app.js" e será exibido o conteúdo dentro da pasta app.js, no caso, o console que printa no terminal o que está escrito dentro dele, Hi Docker.
+    - Mas ainda não chegamos no ponto em que queremos, que é o Docker. Caso vc não tenha nenhum tipo de node instalado na sua máquina, provavelmente, o comando acima que no terminal não rodará e apareceria alguma mensagem do gênero "comando não encontrado". Entretanto, como foi visto, o docker tem uma gama enorme de bibliotecas que são compatíveis para as linguagens. Ou seja, significa que mesmo que vc não tenha um node instalado na sua máquina, bastaria dockerizar, em outras palavras, no processo de criação da imagem, que será usado um arquivo chamado Dockerfile, dentro dela podemos gerenciar um comando que ao criar a imagem, nesse processo, instale a linguagem que vc queira usar, nesse caso node e o alpine. Assim, a imagem criada, dentro dela, estará instalada essas linguagens para serem rodadas dentro do container.
+    - No caso, vamos ver como podemos converter a aplicação em um image. Para isso, precisamos criar um arquivo chamado Dockerfile. Basicamente, o Dockerfile é o arquivo e o núcleo onde vc consegue gerenciar de qual forma vc vai querer que ocorra as conversões para image e que tipo de comandos vc quer que o terminal faça depois que ocorre alguns processos ou quais pastas vc quer considerar da aplicação, etc.... Ou seja, é o controle central onde vc pode falar quem vai ou não ser considerado e como será considerado para o processo de geração da imagem.
+    - Criado o Dockerfile (vamos ter uma seção em que vamos estudar cada comando que foi implementado dentro do Dockerfile para entender o gerenciamento) vamos precisar colocar no terminal com o diretório aberto o comando "docker build -t hi-docker .", onde o "hi-docker" será o nome da minha imagem e o "." (ponto) para referenciar que a imagem deverá ser criado a partir do diretório em que eu estou aberto pelo terminal (diretório local), no caso, Docker.
+    - Feito o processo acima, se vc abrir o Docker Desktop, na aba images constará a imagem que vc criou, hi-docker.
+    - Podemos verificar as imagens que foram criado colocando o comando "docker images" pelo terminal. Esse comando listará todos as imagens foram criadas e estão sendo listadas exatamente da forma como se encontra no Docker Desktop.
+    - No caso, dentro da imagem, hi-docker, que acabamos de criar, dentro dela foi colocado um comando para instalar uma linguagem x de programação na imagem que será criada e que será rodado no container do Docker.
+    - Agora, vamos precisar rodar a imagem que criamos. No caso, precisamos rodar pelo terminal o comando "docker run (nome da imagem que foi criada)". Como resultado, ocorreu o mesmo que aconteceu quando eu rodei pelo terminal o comando "node app.js" visto que no iMac que estou usando tem o node instalado.
+    - Além disso, quando olhamos pelo Docker Desktop na aba Containers, podemos verificar que foi criado um container para rodarmos a imagem que foi criado.
+    - Visto que não temos o node.js criado na nossa máquina.
+
+Linux:
+  - Se vc quiser manusear de forma bem feita o Docker, é inevitável que seja uma condição necessário que vc saiba muito bem Linux.
+  - Considerando que na sua máquina não tenha um Linux instalado, iremos aproveitar do recurso muito poderoso do Docker, o container.
+  - No caso, podemos, sim, rodar um Linux dentro de um container. O que significa que se vc tem um Sistema Operacional (SO) que não seja linux e precisa trabalhar com Linux, vc não precisará instalar uma na sua máquina e dividindo os espaços do disco rígido só para poder aproveitar dos recursos desse SO. Mas, sim, bastaria criar um container dentro do Docker e dentro dela rodar o Linux localmente.
+  - Vamos praticar alguns comandos:
+      - Primeiro, vamos verificar quais tipos de containers estão rodando no docker ou quantos containers foram criadas, o que inclui aquelas que não estão rodando mas estão lá, claro precisa estar com o Docker Desktop aberto:
+          - docker ps - serve para verificar quais containers estão rodando
+          - docker ps -a - Lista todos os containers existentes.
+      - Segundo, vamos pegar a distribuição Linux do Docker Hub rodando o comando pelo terminal. Vale ressaltar que a forma como será rodado o Ubuntu se chama modo interativo (interactive mode):
+          - docker run -it (nome da ditribuição) - Não só baixa a distribuição como tbm já roda criando um terminal linux Ubuntu dentro do terminal que vc está utilizando
+            Unable to find image 'ubuntu:latest' locally
+            latest: Pulling from library/ubuntu
+            cf92e523b49e: Pull complete 
+            Digest: sha256:35fb073f9e56eb84041b0745cb714eff0f7b225ea9e024f703cab56aaa5c7720
+            Status: Downloaded newer image for ubuntu:latest
+            root@afd2ee4370ef:/#
+
+            Exibição do resultado após rodar o comando acima. Basicamete, "root@afd2ee4370ef:/#" isso indica que está rodando um terminal linux Ubuntu dentro do terminal que vc está trabalhando.
+            Para confirmação disso, bastaria colocar o comando "ls" nesse terminal Linux para verificar que serão exibidos diretórios que não constam na sua máquina.
+            Experimentando alguns comandos:
+              - whoami - Mostrará qual o nome do usuário cadastrado pelo terminal Linux
+              - echo <string> - retorna o string
+              - echo $0 - Me dirá em qual diretório estou. Neste caso, o bash
+              - history - retornará o histórico de comandos que foi rodado pelo terminal
+
+          - dockr pull (nome da distribuição) - se fosse só para baixar alguma distribuição do Docker Hub
+  - Vamos agora aprender sobre pacotes que temos no Linux, o tal do apt (Advanced Packege Tool):
+    - apt list - serve para verifica quais pacotes já estão instalados no Linux.
+    - apt update - acessará o ubunto e realizará download dos pacotes mais utilizados e/ou mais atualizados
+    - nano - é um pacote que que se for necessário usar ela precisaria instalar ela. Ela é um editor de texto.
+    - apt install (nome do pacote) - Serve para instalar o pacote que vc precisa. No caso, instala o nano.
+    - nano teste.txt - cria um arquivo de texto com o nome teste e extensão .txt. Porém precisa ser salvo usando os atalhos abaixo. Bastaria digitar ls para verificar que de fato o arquivo foi criado.
+    - apt remove (nome do pacote) - remove o pacote instalado.
+  - Vamos agora aprender sobre o sistema de arquivos do Linux e suas hierarquias:
+    - No Linux tudo começa com o root/barra, "/" (no windows essa barra é para o outro lado).
+    - Depois da barra vem os diretórios, como bin, dev, etc, etc... Bastaria dar um ls para ver os tipos de diretórios disponíveis.
+      - bin - foi criado para armazenar comandos binários que precisam ser disponíveis para todos os usuários. Como, por exemplo, os comandos que colocamos no terminal.
+      - dev - é um espaço para armazenar os arquivos de devices/dispositivos como, por exemplo, NOU, disco, SDA, TTY, random, etc...
+      - etc (editable text configuration) - é armazenado arquivos de hosts.
+    - Para saber mais sobre bastaria colocar no google "linux directory structure" ou acessar diretamente um  desses links https://www.thegeekstuff.com/2010/09/linux-file-system-structure/, https://www.geeksforgeeks.org/linux-directory-structure/ ou https://eng.libretexts.org/Bookshelves/Computer_Science/Operating_Systems/Linux_-_The_Penguin_Marches_On_(McClanahan)/04%3A_Managing_Linux_Storage/5.12%3A_Linux_Directory_Structure/5.12.01%3A_Linux_Directory_Structure_-_Hierarchy
+  - Navegando no Linux:
+    - pwd (print working directory) - Mostra o caminho de acessos aos diretórios começando do diretório principal, "/".
+    - ls -1 - Mostra todos os arquivos e diretórios em forma de coluna e não em linha
+    - ls -l - Mostra o diretório e o respectivo informação desse diretório.
+    - cd /(nome do diretório) (Change Directory - cd) - Acessa o diretório que vc queira. Podemos ir colocando vários barras e os nomes dos diretórios que reside dentro de outro diretório, como por exemplo, cd /etc/alternative/(nome)/(nome)
+    - cd .. - Serve para voltar um diretório anterior
+    - ls /(nome do diretorio)/(nome do diretório dentro do diretório anterior) - Serve para listar os diretórios e o arquivo de um diretório específico.
+  - Criando Arquivos e Diretórios:
+    - cd ~ - Serve para acessar o diretório home
+    - mkdir (nome) - serve para criar uma pasta
+    - mv (nome antigo) (nome novo) - serve para modificar o nome. O mesmo comando serve para modificar o arquivo de uma pasta para outro
+    - touch (nome e extensão do arquivo) - Serve para criar um arquivo. Pode se criar vários arquivos colocando o nome o extensão de cada arquivo sucessivamente ao lado do outro separado por espaço.
+    - rm (nome do arquivo) - remove o arquivo 
+    - rm (siglas que iniciam)* - remove todo arquivo que inicia com tal sigla. Um exemplo que temos é hi1.txt, hi2.txt e hi3.txt. colocando o comando rm hi* todos os arquivos que começa com "hi" serão removidos.
+    - rm -r (nome do diretório) - serve para remover o diretório.
+  - Editando arquivos:
+    - cat (nome do arquivo) - serve para visualizar o conteúdo dentro do arquivo.
+    - cat /(nome do diretório)/(nome do arquivo que está dentro do diretório) - Serve para conseguir visualizar o conteúdo/informação dentro do arquivo que reside dentro de um diretório.
+    - more (caminho do diretorio e em seguida o nome do arquivo) - Mostrará somente 25% das informações contidas dentro do arquivo, dependendo do tamanho da janela do terminal aberto. Basta pressionar espaço para ir mostrando mais informações contidas dentro desse arquivo. Isso de cima para baixo.
+    - less (caminho do diretorio e em seguida o nome do arquivo) - é o mesmo do more, mas de baixo para cima. Precisaria instalar o pacote que inclui esse comando dependendo a versão do Linux.
+  - Redirecionando no Linux:
+    - cat (nome do arquivo) > (nome de um arquivo novo) - serve para criar um novo arquivo e mandar todas as informações que estão no arquivo existente e indicado no comando dentro desse novo arquivo. Podemos usar esse "cat" da outra forma tbm que é chamando dois arquivos ou mais arquivos existente e concatenar sobre um outro arquivo novo que será criado e dentro da mesma enviar todas as informações dos arquivos que foram chamados de forma concatenada. Um exemplo, cat leonardo.txt teste.txt > file.txt.
+    - echo (alguma frase) > (nome de um arquivo novo) - Serve para poder colocar alguma frase dentro de um arquivo novo ou existente.
+  - Utilizando GREP: https://phoenixnap.com/kb/grep-command-linux-unix-examples
+    - grep (Global Regular Expression Print) - Serve para conseguir verifiar se algum conteúdo está dentro de um arquivo sem preciar abrir o arquivo. Podemos realizar a procura de um conteúdo de forma simultânea em vários arquivos tbm. Bastaria chamar os nomes dos arquivos sucessivamente seguido de espaço.
+    - grep (conteúdo) (sigla)* - Podemos a mesma procura que ocorre na exibição do comando cat usando *.
+    - grep (conteúdo) . - Serve para verficar de forma booleana se existe ou não algum diretório com conteúdo que vc está colocando.
+    - grep -i (conteúdo) . - -i pede para ignorar se é maiúsculo ou minúsculo
+    - grep -i -r (conteudo) . - Serve para não só confirmar se existem arquivos com tais conteúdos com também exibem quais são.
+  - Utilizando o FIND:
+    - find - Serve para procurar um arquivo. Até aqueles que estão ocultos.
+    - find /(nome do diretório) - vai mostrar tudo que está dentro desse diretório.
+    - find -type (f ou d) - filtra a procura por tipos, sendo "f" arquivos e "d" diretórios.
+    - find -type f -name "(nome do arquivo e extensão dela)" - Serve para verficar se existe o arquivo com aquele nome. Diferencia letra maiúscula e minúscula. O mesmo vale para diretório, caso coloque o "d" no lugar de "f".
+    - findo -type f -name "(siglas)*" - serve para procurar todos os arquivos que inicia com a tal sigla. O mesmo vale para o diretório caso coloque o "d" no lugar de "f".
+  - Execudando multiplos comandos:
+    - Cada comando executado deverá ser separado por ";" em Linux.
+    - O conjunto de comandos acima serão processados, todas elas, independente de se algum comando delas não rodar. Para caso vc queira que se, por ventura, algum dos comandos não rodar vc quiser que ele pare o processo, então no lugar de ";" deverá ser usado o "&&".
+  - Gerenciando processos:
+    - ps - vc consegue visualizar os processos que estão rodando.
+    - sleep (numero) - é uma forma de exibir a linha de comando do terminal após algum tempo.
+    - sleep (numero) & - Executa o comando sleep, mas deixa o terminal livre. Esse processo é chamado de background. No caso, feito esse comando em seguida colocar o comando ps, será mostrado que o processo sleep está sendo executado.
+    - kill (Número do PID que pode ser visto pelo ps) - Ele mata literalmente o processamento, ou seja, encerra, dá um freio bruto. Esse comando serve para casos em que o sistema operacional que vc está rodando está muito lento e serve para conseguir tirar algum processamento desnecessário que esteja rodando.
+  - Gerenciando Usuários:
+    - useradd - Serve para poder add algum novo usuário e não basta somente esse comando. Mas tbm, precisaria colocar mais algum outro comando. Para verificar isso basta colocar useradd no terminal e dar o enter.
+    - useradd -m (algum nome) - cria o usuário com o nome. Mas vc consegue fazer isso mediante de que vc seja o root.
+    - usermod - serve para modificar o usuário.
+    - userdel - serve para deletar o usuário.
+    - cat /etc/passwd - Serve para verificar se o usuário foi criado, mas claro, o password será exibido de forma encriptada.
+    - Precisamos saber como logar com o usuário que criamos dentro do SO interativo. Para isso precisamos abrir uma nova aba do terminal e dentro dela digitar "docker exec -it -u (nome do usuário criado) (Id do container onde está rodando o SO interativo) bash".
+    - Ao logarmos com um usuário, ele terá alguns acessos negados, onde somente o usuário dono "root" tem.
+    - exit - Para sair do modo de usuário logado.
+  - Gerenciando Grupos:
+    - cat /etc/group - Serve para verificar quais grupos compostos de usuários existem.
+    - Todo usuário criado pelo useradd acabam sendo adicionados aos grupos primários ou secundários.
+    - groups (nome de algum grupo) - Mostrará todos os usuários pertencentes à esse grupo.
+    - groupadd (nome do grupo novo) - Criará um novo grupo.
+    - usermod -G (nome do grupo) (usuário que vc quer add) - Serve para adicionar um usuário em um determinado grupo.
+    - groups (nome do usuário) - Mostrará em quais groups esse usuário pertence.
+  - Premissões de Arquivos: 
+    - Quando damos ls -l, na lista é mostrado uma combinação de "r", "w", "d" e "x", respectivamente, read, write, directory e execute. Eles indicam os tipos de permissões que o usuário pode realizar sobre o arquivo, diretório e o programa que existem. Tudo isso no primeiro bloco que está dividido com um traço.
+    - Agora, no segundo bloco, depois do traço de um conjunto de permissões, existe as permissões que os grupos existentes podem realizar.
+    - Agora, no terceiro bloco, reside as permissões do "everyone", ou seja, as permissões que todo mundo tem.
+    - chmod u+(alguma permissão) (arquivo que vc quer add a permissão) - Serve para add alguma permissão de um usuário sobre um arquivo.
+Criando Imagens Docker:
+  - O que são Imagens e Containers?:
+    - O que é Imagem:
+      - Cut-Down OS, ou seja, tem um Sistema Opperacional dentro dele
+      - Tem todas as bibliotecas que precisa para que a sua aplicação rode
+      - Tudo que a sua aplicação precisa para funcionar de arquivos estão lá dentro
+      - Variáveis de ambiente (enviroment variables)
+      - Basicamente, a definição de uma imagem em Docker seria algo que contém tudo o que vc precisa para uma aplicação funcionar
+    - O que é Container:
+      - É como se fosse uma VM de forma isolado
+      - Ele tem start/stop
+      - É um processo que roda dentro de uma máquina
+  - A aplicação:
+    - Vamos realizar uma aplicação local iniciando tudo do zero pegando um app teste e a partir dela realizar o processo de criação da imagem e, por fim, rodar ela.
+      - No Google, procure por Docker Sample Application - https://docs.docker.com/get-started/02_our_app/
+      - No link acima, podemos realizar um download de um arquivo zipado para conseguir baixar o arquivo teste que consta com nome getting-started-master e dentro dela pegar apenas o diretório app.
+  - Instruções do Dockerfile:
+    - Precisaremos criar um dockerfile dentro do diretório app.
+      - FROM - Esse from indica qual imagem irá carregar, um windows, linux ubuntu, center OS, Alpine, etc... E qual que é a plataforma nodejs, python, etc...
+      - WORKDIR (Working Directory) - Define em qual diretório quer que a sua aplicação rode sempre
+      - COPY/ADD - Esses dois servem para copiar/adicionar todos os arquivos que fazem parte da sua aplicação dentro da sua imagem
+      - RUN - diz para rodar tal processo
+      - ENV (Enviroment) - Configuração do ambiente, no caso, o que eu preciso dentro do meu linux para rodar a tal aplicação.
+      - EXPOSE - é o que é responsável colocar em qual porta local que vc escolheu para rodar a sua aplicação
+      - USER - Define o usuário que pode rodar essa aplicação. O uso desse recurso é opcional.
+      - CMD/ENTRYPOINT - Servem para vc poder rodar outros comandos que vc deseja implementar no processo de criação da imagem.
+  - Escolhendo a imagem:
+    - A aplicação teste que baixamos do site da Docker, conseguimos verificar em que tipo de versões que o app está configurado para podermos instruir a construção Dockefile
+    - Configurado o Dockerfile no diretório app de acordo com a instrução (Neste caso só foi colocado FROM node:12-alpine), então bastaria rodar no terminal o comando docker build -t app .
+    - O comando acima serve para construir uma imagem
+    - Rodando o comando docker run -it app sh, ela irá rodar essa imagem de forma interativa e dentro dela poderemos verificar que tipo de versão do node estará presente dentro dela
+    - Para sair do modo interativo acima, bastaria digitar Ctrl/Command + c ou exit
+  - Copiando arquivos na imagem:
+    - Podemos colocar dentro do Dockerfile o COPY da forma (COPY yarn.lock, ou se quiser colocar mais conteúdo, COPY yarn.lock package.json)
+    - Uma segunda forma de uso é quando vc queira copiar um arquivo para dentro de um outro diretório, no caso, a estrutura exemplo seria COPY package.json /app (se for simples arquivo) ou COPY package.json /app/ (se for dois arquivos)
+    - Se quiser copiar todos os arquivos json dentro de um diretório, seria COPY *.json /app/
+    - Se quiser copiar todos os arquivos, seria COPY . /app/
+    - Se quiser definir que toda a execução ocorre somente dentro de um diretório, em vez de ficar especificando pelo COPY para qual diretório, antes disso bastaria colocar o WORKDIR /app, para especificar que tudo ocorrerá dentro do diretório app.
+    - A diferença entre COPY e o ADD está no fato de que se vc quiser realizar alguma implementação que esteja em algum web site, em vez do COPY, vc utilizará o ADD.
+    - No caso, se for uma cópia simples, usamos o COPY, mas se for uma cópia de um website ou arquivo zip, usamos o ADD.
+    - Implementado o WORKDIR e COPY no Dockerfile dentro do diretório app, bastaria rodar pelo terminal o mesmo comando para construir a imagem, mas desta vez com os WORKDIR e COPY implementados
+    - Desta vez, se rodarmos de forma interativa como foi feito antes, poderemos ver que a ação do COPY estará implementado de forma que vc colocando o comando ls, irá aparecer todos os arquivos que tem no diretório app copiados dentro da pasta interativa.
+  - Utilizando o RUN:
+    - No caso, visto que quando rodamos a imagem app que criamos de forma interativa, nela não consta o python rodando. Para isso, usamos o RUN para conseguirmos instalar o python ao criar, novamente, a mesma imagem, só que desta vez com o python instalado.
+    - Cada vez que colocamos mais dependências pelo Dockerfile, conseguimos ver que a imagem criada vai aumentando de tamanho.
+  - Configurando Variáveis:
+    - Agora, vamos como se usa o ENV, no caso, ela serve para quando queremos dizer em qual ambiente queremos que ela rode, como API. A forma como se implementa seria API_URL="o link url".
+  - Utilizando o EXPOSE:
+    - O EXPOSE serve para conseguir definir qual porta para o localhost em que o container irá rodar. (Para a implementação que fizemos foi o EXPOSE 3000)
+    - Um detalhe muito importante. Quando acessamos o container localmente especificando uma porta, a especificação, somente, serve para dizer à máquina na qual estou rodando o container qual porta eu quero abrir para utilizar. Isso significa que não irei poder utilizar o ifconfig e acessar o mesmo app pelo outro aparelho mesmo que eu tenha o ip da máquina onde o container esta rodando.
+  - Utilizando o CMD:
+    - No caso, iremos especificar ao CMD qual o arquivo que queremos que rode. (CMD ["node", "src/index.js"])
+    - A diferença entre o RUN e o CMD está no fato de que o RUN roda durante a construção da imagem. Já o CMD tem como funcionalidade somente depois que a imagem está criada, para inicialização da imagem ou durante em que a imagem esteja rodando.
+    - Note que o yarn, tbm, faz parte do programa app que estamos rodando, então precisamos rodar ela tbm de modo que ela faça parte da composição de uma imagem. Para isso, bastaria acrescentar RUN yarn install --production
+  - Adicionando um usuário na imagem:
+    - RUN addgroup dev && adduser -S -G leonardo dev
+    - USER leonardo
+    - Colocamos o comando acima depois que o WORKDIR para conseguimos rodar os usuários que estão dentro do container que foi criado.
+    - Por hora não vamos precisar desses comandos acima para a finalidade de teste do app.
+  - Rodando a sua aplicação:
+    - Primeiro constroi a imagem, caso tenha add mais dependências no Dockerfile
+    - Em seguida coloque docker run -dp 3000:3000 app
+    - Em seguida abra um navegador no Broswer e coloque localhost:3000
+    - Ao verificar no Docker Desktop estará indicando que ela está rodando na porta 3000
+  - Melhorando a performance:
+    - Cada vez mais que add as dependências a imagem fica cada vez mais pesado para rodar ela ou até mesmo na sua criação. Existe uma maneira de deixar o processamento dessa imagem mais leve usando o cache.
+    - O formato como vc colocar o COPY no Dockerfile, ele pode melhorar a performance do processamento. No caso, colocando, por exemplo, o COPY package.json antes e depois o COPY . ., melhoramos a performance da construção da imagem, pois estamos verificando primeiro se o arquivo núcleo onde há todas as dependências houve ou não alguma alteração e se não tiver, então bastaria colocar da mesma forma como estava antes sem precisar passar novamente pelo processo de recriamento. Ou seja, estará tudo cacheado.
+    - No caso, ao acrescentarmos o arquivo README.txt, como não houve nenhuma alteração no package.json e o COPY package.json irá confirmar isso, então não será necessário rodar os dois RUNS que estão sendo pedidos para processar.
+    - Logo, em Dockerfile, podemos tornar melhor a performance do processamento só pela alteração da ordem que colocamos os comandos ou a forma como pedimos para que a imagem seja construída.
+  - Adicionando tags a imagens:
+    - as tags servem para que possamos realizar as identificações das imagens. Muitas vezes quando temos versões diferentes de imagens com mesmos nomes.
+    - digitando docker imagens e podemos visualizar na parte escrito TAG onde será listado.
+    - No caso, podemos ver que ao longo da aula realizamos várias builds de imagens com o mesmo nome app. Sendo que a cada build as suas versões eram diferentes. Entretanto, como estava sendo construída sobre a mesma imagem, então o que ocorria era uma sobrescrição da nova versão sobra a versão velha no processo de build
+    - Para evitar que isso ocorra que existe as tags que podemos separar as mesmas imagens com versões diferentes.
+    - docker build -t app:v1.0.0 .
+    - Note que, ao rodar o comando acima, podemos verificar, docker images, que foi criado uma imagem app mas com a tag v1.0.0
+    - docker imagem remove app:v1.0.0 - Serve para remover a imagem app com a tag v1.0.0
+    - docker image tag app:latest app:v1.0.0 - Serve para trocar a tag latest da imagem app para a tag v1.0.0
+    - para alterar a tag de outras imagens funciona de forma análoga. Se bem que, em vez de alterar é como se criasse um clone seu mas com o outro nome.
+    - Agora, vamos aproveitar essa nova imagem da versão v1.0.0 com uma outra nova versão.
+    - docker build -t app:v1.0.1 .
+    - Literalmente, agora sabemos qual a imagem mais atualizada.
+    - Note que, a cada build da imagem, sempre ela aparece como uma tag latest que é algo perigoso como no nosso caso, pois a versão mais atualizada é o v1.0.1
+    - Por isso, é recomendável que sempre que forem buildar alguma imagem que coloque a tag especificando diretinho a versão dela para melhor o controle e geranciamento.
+  - Compatilhando imagens:
+    - Usaremos o docker hub, assim como é usado no github para vc conseguir compartilhar os seus arquivos e suas produções.
+    - No caso, com usuário logado clique em Create Repository
+    - Agora, usando o terminal, vamos subir alguma imagem para o docker hub.
+    - docker build -t app:v1 .
+    - Com o comando acima, vamos criar primero uma versão
+    - Vamos agora add uma nova tag igual ao repositório que foi criado no docker hub (hellowounderworld/app)
+    - docker image tag (image ID) hellowounderworld/app:v1
+    - Agora, vamos fazer um upload do que criamos acima.
+    - Primeiro, pelo terminal, vamos logar no docker hub
+    - docker login
+    - docker push hellowounderworld/app:v1 
+    - O comando acima serve para enviar toda a imagem para o docker hub
+    - Feito isso, ao acessar o docker hub com o seu usuário logado, poderá ver que no repositório que vc criou haverá a imagem com a versão que vc criou.
+    - A cada versão atualizada, fazemos os mesmos processos de push para conseguirmos compartilhar as nossas imagens.
+  - Salvando e carregando imagens:
+    - Podemo transferir sempre as imagens de uma máquina para outra por intermédio do docker hub, o que é recomendável. Mas existem formas mais diretas de realizar isso.
+    - docker image save --help
+    - Mostrará as opções para salvar
+    - docker image save -o appv2.tar app:v2
+    - Ao olhar na pasta/diretório app podemos ver o arquivo appv2.tar que é o arquivo comprimido onde foi salvo a imagem app v2
+    - docker image rm app:v2
+    - docker image rm (Image ID siglas iniciais)
+    - docker image load --help
+    - docker image load -i appv2.tar
+Containers:
+  - Os containers:
+    - Baiscamente vamos aprender a utilizar os containers.
+  - Nomeando containers:
+    - docker run - é o comando padrão para conseguir fazer algum container rodar.
+    - Primeiro, antes de prosseguir, tenta deixar o container e as listas de imagens iguais ao que está na aula.
+    - docker run (nome da aplicação):(versão) - Comando que serve para iniciar alguma aplicação que vc criou. No nosso caso, "docker run app:v2".
+    - docker run -d (nome da aplicação):(versão) - No caso, o comando anterior vc consegue rodar alguma aplicação, mas vc não iria mais conseguir fazer nada no terminal. Para evitar que isso ocorra e ainda vc consiga rodar a aplicação, bastaria colocar o -d depois do run.
+    - Note que, ao rodar o comando acima, conseguimos rodar a aplicação, mas o nome do container que estará rodando a aplicação acabará ficando ao cargo da escolha do docker. Entretanto existe sim uma forma de conseguirmos escolher e personalizar para um nome que queremos.
+    - docker run -d --name (Nome que vc pode dar ao container) (nome da aplicação):(sua versão) - Esse seria a forma em que vc consegue rodar a aplicação de modo que vc mesmo escolha algum nome para o container onde o seu app estará rodando.
+    - Em boas práticas, é que um container seja iniciado em background!
+  - Verificando o log de eventos:
+    - docker logs --help - Mostrará todas as nomenclaturas que podem ser acrescentadas para o docker logs.
+    - docker logs (options) (container ID)
+    - docker logs -f (container id) - No caso, ele fica escutando o container, no sentido que qualquer ação que eu fizer dentro do app que está rodando desse container que eu indiquei no log será exibido.
+    - docker logs -n (algum número inteiro) - Mostrará a lista dos containers de baixo para cima na quantidade em que vc escolhe levando em consideração o id, pode ser a sigla inicial em que um conjunto de id`s tenham, para lista-las.
+    - docker logs (container id/sigla) - Mostrará todas as lista inteira do docker.
+    - docker logs -t (container id) - Mostrará o timestamp de quanto tais mensagens de cada logs estão acontecendo.
+    - Em boas práticas, o desenvolvedor conhece muito bem a importância de usar os logs para debugar e resolver os problemas! Então os estudos de logs pelos terminais de SAAS, no geral, merece uma atenção bem especial para a pessoa aprender bem e evitar dores de cabeças futuras.
+  - Publicando portas de acesso:
+    - Basicamente, existem inúmeras formas de conseguirmos acessar as portas. Existem formas tbm de acessar uma porta partindo de uma outra porta indo para a porta objetivo, exemplo, para acessar a porta 3000 podemos acessar primeiro a porta 80 e dela acessar a poarta 3000.
+    - docker run -d -p (número da porta de entrada):(número da porta receptora) --name (nome que vc vai dar ao container) (nome da aplicação):(versão dela) - O -p serve para definirmos de qua porta para qual porta queremos ter o acesso. De forma abreviada, podemos juntar o -d e o -p de forma que fique -dp.
+    - No nosso caso, rodamos docker run -d -p 80:300 --name BuuDigitalTech app:v2, e note que quando abrirmos o broswer e digitamos apenas "localhost" abrirá a aplicação como queremos. Isso indica que estamos acessando a porta 3000 através da porta 80.
+    - Como prova disso, ao colocarmos o comando docker ps no terminal aparecerá a seguinte informação sobre o container criado acima
+
+      CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                  NAMES
+      101a2c7e215b   app:v2    "docker-entrypoint.s…"   17 minutes ago   Up 17 minutes   0.0.0.0:80->3000/tcp   BuuDigitalTech
+
+      Note que, em PORTS está indicando que qualquer tráfego na porta 80 é direcionado à porta 3000. No caso, indica o redirecionamento de portas.
+    - Lembrando que se não for feito o redirecionamento da porta como foi feito acima, não será possível rodar o docker em produção! Detalhe importantíssimo!
+  - Executando comandos em containers:
+    - Vamos ensinar uma forma de executar algum comando enquanto o container estiver rodando.
+    - docker exec (nome do container) ls - Estou executando depois que a imagem está carregado dentro do container. No caso, o comando exibirá todos os arquivos e diretórios disponíveis dentro da imagem que foi criado.
+    - docker exec (nome do container) (algum outro comando) - De modo geral, esse comando serve dessa forma para podermos verificar/modificar/criar algo dentro do linux sem acessar diretamento o linux.
+  - Iniciando e parando containers:
+    - docker stop (nome do container) - serve para parar o container. Importante ressaltar que esse comando não remove o container.
+    - docker start (nome do container) - serve para rodar novamente o container já existente e que apenas não está rodando.
+    - Importante ressaltar! para não confundirmos entre docker run, docker stop e docker start, respectivamente, é criar (do zero), parar (sem remover) e iniciar (a partir de uma já existente).
+    - Se não quiser colocar o nome do container, pode ser o ID.
+  - Removendo containers:
+    - docker rm --help - Mostrará as opções para remover.
+    - docker rm (nome do container) - Serve para remover um container que foi indicado. Lembre-se, com esse comando, não podemos remover o container que esteja em execução.
+    - docker rm -f (nome do container) - Serve para remover de forma forçada o container que foi indicado.
+  - Volumes persistentes:
+    - Vamos deixar claro que quando criamos algum arquivo dentro de uma imagem que esteja rodando dentro de um container e depois que removermos esse container e, em seguida, criarmos novamente a imagem, o arquivo que havíamos criado naquela imagem não estará mais nela.
+    - Bom, isso é claro de se pensar, pois o tal arquivo que foi criado dentro de uma aplicação rodando, nunca existiu originalmente no projeto em que se cria a imagem pelo Dockerfile.
+    - Mas existem uma forma de conseguirmos com que os arquivos criados estejam permanecidos mesmo ocorrendo tais processos, que são chamados de volumes persistentes.
+    - docker volume create (nome do volume) - Serve para criar o volume dentro da aplicação.
+    - docker volume inspect (nome do volume) - Serve para inspecionar como está a estrutura do volume.
+    - docker run -d -p (número da porta de partida):(número da porta de chegada) --name (nome que será dado ao container) -v (nome do volume):/(nome do app onde vc quer add o volume) (nome do app):(versão dela) - No caso, ele serve para vc conseguir criar um container novo e criar algum volume em alguma pasta especificando o caminho dela. Um exemplo disso seria, docker run -d -p 3000:3000 --name kiwi -v app-dados:/app/dados app:v2.
+    - docker exec -it (nome do container) sh - executa algum container de forma interativa.
+    - docker rm -f (nome do container) - Remoção forçada.
+    - Nome que, ao removermos o container acima a pargunta que podemos fazer seria, e a pasta dados e o arquivo docker.txt que criamos dentro do modo interativo? Foi excluído? A resposta é não. O fato de eu ter criado a pasta dados pelo volume, quando criarmos um outro container de nome diferente com o mesmo docker run que rodamos para criar o container kiwi, executado isso no modo interativo irá aparecer as pastas que foi criado pelo volume.
+    - No caso, para boas práticas, sempre que for criar alguma pasta ou arquivo novo, vamos criar pelo volume e não diretamente dentro do container.
+  - Copiando arquivos de host para o container:
+    - Vamos aprender a copiar arquivos ou pasta que estão dentro de um container em execução de modo interativo para dentro de um container.
+    - docker exec -it (nome do contianer) sh - Executando um container no modo interativo.
+    - docker cp (origem) (destino) - docker cp kiwi2:/app/text.txt ., no caso a origem é kiwi2:/app/text.txt e o destino é no meu local ".".
+    - Com o mesmo comando acima, podemos criar uma cópia de um arquivo do local para alguma aplicação que roda de forma interativa.
+Docker Compose:
+  - O Docker Compose:
+    - O docker compose ele possibilita rodar vários containers simultaneamente de forma que todas elas estejam relacionados ou não. Isso significa que podemos rodar um container para frontend, outro para backend de forma que uma ação de um outro container afete no outro.
+  - Instalando o Docker Compose:
+    - Precisamos verificar se o docker compose já está instalado na sua máquina ou não. Para isso seria necessário verificar pelo google como se instala o docker compose. (https://docker-docs.netlify.app/compose/install/)
+    - docker-compose --version - Verifica se está ou não instalado o docker compose e a sua versão.
+    - docker version - serve para ver a versão do docker que vc usa.
+  - Limpando a maquina local:
+    - Antes de começarmos a usar o docker compose, precisamos fazer uma limpeza na máquina local para facilitar a execução e o gerenciamento dos multi-containers que vc irá criar através do docker compose. Existem duas formas de realizar a tal limpeza, a forma fácil e a difícil.
+    - Forma difícil:
+      - docker image (ou container) rm (id da imagem ou do container) - Remoção uma por uma.
+    - Forma fácil:
+      - Entra no docker desktop e clica no troubleshoot e em seguida clica no clean/purge data para apagar praticamente todas as imagens e containers que foram criados.
+  - Download do projeto Netflix:
+    - Basta realizar o download do arquivo netflix.zip. Mas ela já está salvo no meu drive tbm.
+  - Rodando o projeto Netflix:
+    - docker-compose up - Vai ler o arquivo docker-compose e começar a construção do que está sendo pedido dentro desse arquivo.
+  - A linguagem YAML:
+    - A linguagem YAML, cujos os arquivos são salvos no formato .yml ou .yaml, definem-se como uma linguagem de data serialization.
+    - data serialization:
+      - Linguagem muito utiliada para escrever códigos e/ou arquivos de configurações.
+    - A sequência de leitura do arquivo YAML é sempre de cima para baixo. Logo, a ordem em que vc coloca os códigos e/ou configurações para leitura acaba ganhando uma importância.
+    - YAML tem um processo de organização chamado indentação (indetation), ou seja, por meio do espaçamento dado pelo tab tudo o que digitar a partir desse espaço para baixo pertencerá para a função mãe. Um exemplo, no arquivo docker-composer.yml tem o serives e após ela tem um tab onde tem os frontend e backend, etc... No caso esses pertencem ao service. E fora dela não pertence ao services.
+  - Criando um docker compose file:
+    - Vamos aprender a criar um docker-compose do zero! Faremos isso no projeto netflix.
+    - Passos básicos para construir o arquivo docker-compose.yml:
+      - Primeiro: Precisa-se definir uma versão. Para isso é recomendável que procure a versão mais atualizada e possível! Para isso vc pode pesquisar pelo google ou acessar esse link (https://docs.docker.com/compose/compose-file/) e ir no Legacy versions e por lá verificar a versão mais atual. No nosso caso será
+        version: "3.8"
+      - OBS: Na parte onde está escrito Compose Specification estará todos os parâmetros que vc pode colocar no arquivo docker-compose.yml
+      - Segundo: Vamos colocar os tipos de serviços. No caso, os tipos de serviços que selecionamos foram frontend, backend e db
+        - Para o frontend precisamos definir o que vai dentro dela. E isso depende muito do que está configurado no Dockerfile do frontend. No caso, existem duas formas de eu conseguir configurar, uma é ir vendo um por um o que está escrito no Dockerfile e outra, mais fácil, é especificar dentro do frontend dizendo para ler o Dockerfile que está dentro do frontend. Em seguida, precisamos definir a porta dentro dela tbm. O que falta colocar são as dependências. No caso, o frontend ele depende do backend, assim como backend depende do db. É necessário especificar isso para evitar que ocorra futuros problemas.
+        - Para o backend é a mesma analogia para construção acima. Além disso, no backend precisa-se conectar com o banco de dados, então precisamos colocar essa condição relacional que é o enviroment e o comand.
+        - Para o db, vamos construir uma imagem de um banco de dados mesmo. No caso, vamos usar o do mongoDB. A imagem do qual mongodb vamos usar podemos encontrar a sua extensão no dockerhub, no nosso caso vamos usar o mongo:4.0-xenial. E a porta para esse banco de dados podemos pesquisar no google jogando mongodb ports (o mesmo pode ser feito para outros bancos de dados). Vamos precisar definir um volume dentro db tbm.
+      - Terceiro: Vamos definir o volume para a aplição vidly.
+  - Rodando e parando o docker compose:
+    - docker-compose --help - Mostra todos as opções que precisamos para esse comando.
+    - docker-compose up --build - serve para construir e iniciar.
+    - docker-compose up -d - serve para vc conseguir iniciar e depois que iniciar ainda ficar livre para mexer no terminal
+    - docker-compose ps - lista todas as aplicações que estão rodando
+    - docker-compose down - serve para parar de rodar as aplicações seus.
+  - A rede do Docker:
+    - Vamos verificar mais a fundo de como os serviços que colocamos no docker-compose se conversam. No caso, eles se conversam por redes endereçado pelo IP. Ou seja, o frontend tem um IP, o backend tem um IP e o db tem um IP, e as comunicações desse IP para outro IP que é o que possibilita a comunicação entre front, back e db, por baixo dos panos.
+    - docker-compose up -d - Subiremos a aplicação.
+    - docker exec -it -u root (id do container) sh - vamos executar o frontend de forma interativa. 
+    - Em seguida, no modo interativo, colocamos o comando ifconfig e é dela que podemos ver o IP do frontend.
+    - Em seguida podemos colocar o comando ping backend para saber o IP do backend. Analogamente, podemos fazer para o db.
+    - Da mesma forma que executamos o frontend de forma interativa, podemos fazer para o backend tbm.
+  - Docker Compose logs:
+    - docker-compose logs - mostrará todas as atividades realizadas das aplicações que foram criadas e que estão rodando pelo docker-compose.yml.
+    - docker-compose logs --help - mostrará todos os parâmetros que vc pode implementar junto com esse comando.
+Projeto DigitalOcean:
+  - Projeto DigitalOcean:
+    - Revisa todos os conteúdos que eu aprendi até agora
+    - crie uma conta no https://www.digitalocean.com/
+    - crie uma vm no digitalocean, pesquisa no google
+    - instale um docker no digitalocean
+    - Será necessário cadastrar um cartão de crédito no digitalocean.
+    - O objetivo final é que o projeto app:v2 seja buildado num servidor cloud e que ela esteja rodando.
+  - Docker Cheat Sheet:
+    - É um pdf que tem os comandos mais importantes do docker.
+Finalizando:
+  - Agradecimento:
+  - Bonus - minha recomendação:
+    Parabéns por ter chegado até aqui!
+
+    Para dar continuidade nos seus estudos e melhorar ainda mais as suas oportunidades no Mercado de Trabalho atual, gostaria de recomendar para você 3 cursos excelentes que você pode começar a estudar hoje mesmo!!
+
+
+
+    Programação PYTHON do ZERO ao Avançado
+
+    https://www.udemy.com/course/programacao-python-do-basico-ao-avancado/?referralCode=F3FA8DD3A5FBBC7DA264
+
+
+
+    Aprenda JavaScript em 7 dias
+
+    https://www.udemy.com/course/aprenda-javascript-em-7-dias/?referralCode=1E8023E77176AA75F732
+
+
+
+    Banco de Dados SQL do ZERO ao Avançado
+
+    https://www.udemy.com/course/curso-sql-do-zero-ao-avancado/?referralCode=44FC5556E5BB0374D256
