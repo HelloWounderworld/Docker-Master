@@ -20,14 +20,14 @@
 
 - É um processo que roda dentro de uma máquina
 
-### A aplicacao:
+## A aplicacao:
 - Vamos realizar uma aplicação local iniciando tudo do zero pegando um app teste e a partir dela realizar o processo de criação da imagem e, por fim, rodar ela.
 
     - No Google, procure por Docker Sample Application - https://docs.docker.com/get-started/02_our_app/
 
     - No link acima, podemos realizar um download de um arquivo zipado para conseguir baixar o arquivo teste que consta com nome getting-started-master e dentro dela pegar apenas o diretório app.
 
-### Instruções do Dockerfile:
+## Instruções do Dockerfile:
 - Precisaremos criar um dockerfile dentro do diretório app.
 
     - FROM - Esse from indica qual imagem irá carregar, um windows, linux ubuntu, center OS, Alpine, etc... E qual que é a plataforma nodejs, python, etc...
@@ -46,7 +46,7 @@
 
     - CMD/ENTRYPOINT - Servem para vc poder rodar outros comandos que vc deseja implementar no processo de criação da imagem.
 
-### Escolhendo a imagem:
+## Escolhendo a imagem:
 - A aplicação teste que baixamos do site da Docker, conseguimos verificar em que tipo de versões que o app está configurado para podermos instruir a construção Dockefile
 
 - Configurado o Dockerfile no diretório app de acordo com a instrução (Neste caso só foi colocado FROM node:12-alpine), então bastaria rodar no terminal o comando docker build -t app .
@@ -57,7 +57,7 @@
 
 - Para sair do modo interativo acima, bastaria digitar Ctrl/Command + c ou exit
 
-### Copiando arquivos na imagem:
+## Copiando arquivos na imagem:
 - Podemos colocar dentro do Dockerfile o COPY da forma (COPY yarn.lock, ou se quiser colocar mais conteúdo, COPY yarn.lock package.json)
 
 - Uma segunda forma de uso é quando vc queira copiar um arquivo para dentro de um outro diretório, no caso, a estrutura exemplo seria COPY package.json /app (se for simples arquivo) ou COPY package.json /app/ (se for dois arquivos)
@@ -76,27 +76,27 @@
 
 - Desta vez, se rodarmos de forma interativa como foi feito antes, poderemos ver que a ação do COPY estará implementado de forma que vc colocando o comando ls, irá aparecer todos os arquivos que tem no diretório app copiados dentro da pasta interativa.
 
-### Utilizando o RUN:
+## Utilizando o RUN:
 - No caso, visto que quando rodamos a imagem app que criamos de forma interativa, nela não consta o python rodando. Para isso, usamos o RUN para conseguirmos instalar o python ao criar, novamente, a mesma imagem, só que desta vez com o python instalado.
 
 - Cada vez que colocamos mais dependências pelo Dockerfile, conseguimos ver que a imagem criada vai aumentando de tamanho.
 
-### Configurando Variáveis:
+## Configurando Variáveis:
 - Agora, vamos como se usa o ENV, no caso, ela serve para quando queremos dizer em qual ambiente queremos que ela rode, como API. A forma como se implementa seria API_URL="o link url".
 
-### Utilizando o EXPOSE:
+## Utilizando o EXPOSE:
 - O EXPOSE serve para conseguir definir qual porta para o localhost em que o container irá rodar. (Para a implementação que fizemos foi o EXPOSE 3000)
 
 - Um detalhe muito importante. Quando acessamos o container localmente especificando uma porta, a especificação, somente, serve para dizer à máquina na qual estou rodando o container qual porta eu quero abrir para utilizar. Isso significa que não irei poder utilizar o ifconfig e acessar o mesmo app pelo outro aparelho mesmo que eu tenha o ip da máquina onde o container esta rodando.
 
-### Utilizando o CMD:
+## Utilizando o CMD:
 - No caso, iremos especificar ao CMD qual o arquivo que queremos que rode. (CMD ["node", "src/index.js"])
 
 - A diferença entre o RUN e o CMD está no fato de que o RUN roda durante a construção da imagem. Já o CMD tem como funcionalidade somente depois que a imagem está criada, para inicialização da imagem ou durante em que a imagem esteja rodando.
 
 - Note que o yarn, tbm, faz parte do programa app que estamos rodando, então precisamos rodar ela tbm de modo que ela faça parte da composição de uma imagem. Para isso, bastaria acrescentar RUN yarn install --production
 
-### Adicionando um usuário na imagem:
+## Adicionando um usuário na imagem:
 - RUN addgroup dev && adduser -S -G leonardo dev
 
 - USER leonardo
@@ -105,7 +105,7 @@
 
 - Por hora não vamos precisar desses comandos acima para a finalidade de teste do app.
 
-### Rodando a sua aplicação:
+## Rodando a sua aplicação:
 - Primeiro constroi a imagem, caso tenha add mais dependências no Dockerfile
 
 - Em seguida coloque docker run -dp 3000:3000 app
@@ -114,7 +114,7 @@
 
 - Ao verificar no Docker Desktop estará indicando que ela está rodando na porta 3000
 
-### Melhorando a performance:
+## Melhorando a performance:
 - Cada vez mais que add as dependências a imagem fica cada vez mais pesado para rodar ela ou até mesmo na sua criação. Existe uma maneira de deixar o processamento dessa imagem mais leve usando o cache.
 
 - O formato como vc colocar o COPY no Dockerfile, ele pode melhorar a performance do processamento. No caso, colocando, por exemplo, o COPY package.json antes e depois o COPY . ., melhoramos a performance da construção da imagem, pois estamos verificando primeiro se o arquivo núcleo onde há todas as dependências houve ou não alguma alteração e se não tiver, então bastaria colocar da mesma forma como estava antes sem precisar passar novamente pelo processo de recriamento. Ou seja, estará tudo cacheado.
@@ -123,7 +123,7 @@
 
 - Logo, em Dockerfile, podemos tornar melhor a performance do processamento só pela alteração da ordem que colocamos os comandos ou a forma como pedimos para que a imagem seja construída.
 
-### Adicionando tags a imagens:
+## Adicionando tags a imagens:
 - as tags servem para que possamos realizar as identificações das imagens. Muitas vezes quando temos versões diferentes de imagens com mesmos nomes.
 
 - digitando docker imagens e podemos visualizar na parte escrito TAG onde será listado.
@@ -152,7 +152,7 @@
 
 - Por isso, é recomendável que sempre que forem buildar alguma imagem que coloque a tag especificando diretinho a versão dela para melhor o controle e geranciamento.
 
-### Compatilhando imagens:
+## Compatilhando imagens:
 - Usaremos o docker hub, assim como é usado no github para vc conseguir compartilhar os seus arquivos e suas produções.
 
 - No caso, com usuário logado clique em Create Repository
@@ -181,7 +181,7 @@
 
 - A cada versão atualizada, fazemos os mesmos processos de push para conseguirmos compartilhar as nossas imagens.
 
-### Salvando e carregando imagens:
+## Salvando e carregando imagens:
 - Podemo transferir sempre as imagens de uma máquina para outra por intermédio do docker hub, o que é recomendável. Mas existem formas mais diretas de realizar isso.
 
 - docker image save --help
