@@ -13,6 +13,42 @@
 
 - Basicamente, a definição de uma imagem em Docker seria algo que contém tudo o que vc precisa para uma aplicação funcionar
 
+Uma imagem Docker é um modelo de sistema de arquivos read-only que contém tudo o que é necessário para executar um determinado aplicativo ou serviço. Ela inclui o código do aplicativo, as bibliotecas, as dependências, as configurações e outros artefatos necessários.
+
+As imagens Docker são construídas a partir de instruções definidas em um arquivo chamado Dockerfile. Esse arquivo contém uma série de comandos que descrevem como a imagem deve ser construída. Alguns comandos comuns em um Dockerfile são:
+
+- FROM: Especifica a imagem base a ser usada.
+
+- COPY: Copia arquivos ou diretórios do host para a imagem.
+
+- RUN: Executa comandos durante a construção da imagem.
+
+- CMD: Define o comando padrão a ser executado quando o contêiner é iniciado.
+
+- EXPOSE: Informa quais portas o contêiner irá escutar.
+
+Para configurar as imagens Docker de forma eficiente, siga estas boas práticas:
+
+1. Escolha uma imagem base apropriada: Selecione uma imagem base que seja otimizada para o seu caso de uso, evitando instalar pacotes desnecessários.
+
+2. Crie camadas lógicas: Organize o Dockerfile em camadas lógicas, com cada camada realizando uma tarefa específica. Isso permite reutilizar camadas existentes durante a construção, melhorando a eficiência.
+
+3. Minimize o número de camadas: Cada instrução no Dockerfile cria uma nova camada na imagem. Quanto menos camadas, melhor, pois isso reduz o tamanho da imagem e acelera o processo de construção.
+
+4. Otimize o cache do Docker: O Docker usa um mecanismo de cache para acelerar a construção de imagens. Organize o Dockerfile de modo que as instruções menos propensas a mudanças apareçam primeiro, para aproveitar melhor o cache.
+
+5. Utilize multi-stage builds: Essa técnica permite criar imagens menores e mais otimizadas, separando a construção da aplicação da criação da imagem final.
+
+6. Aplique a melhor compressão: Ao gerar a imagem final, utilize o formato de compressão mais apropriado, como gzip ou zstd, para reduzir o tamanho da imagem.
+
+Seguindo essas boas práticas, você pode criar imagens Docker eficientes, minimizando o tamanho e o tempo de construção, o que facilita o gerenciamento e a distribuição dos seus aplicativos.
+
+Espero que essas informações tenham sido úteis! Sinta-se à vontade para fazer mais perguntas.
+
+Voce pode baixar as imagens bases que seja adequado para configurar a sua imagem oelo seguinte link
+
+    https://hub.docker.com/search
+
 ### O que é Container:
 - É como se fosse uma VM de forma isolado
 
@@ -199,3 +235,132 @@
 - docker image load --help
 
 - docker image load -i appv2.tar
+
+## Construindo a minha primeira imagem passo a passo:
+
+### Ponto de partida - FROM:
+A primeira linha FROM ubuntu:22.04 é uma instrução muito importante em um Dockerfile, pois ela define a imagem base a partir da qual sua imagem será construída.
+
+    FROM ubuntu:22.04
+
+Neste caso, a imagem base é o Ubuntu na versão 22.04 LTS (Long Term Support). Isso significa que sua imagem Docker terá como ponto de partida a distribuição Ubuntu 22.04.
+
+### Instrucao SHELL
+Já a segunda linha SHELL ["/bin/bash", "-c"] é uma instrução que define o shell padrão a ser usado durante a construção da imagem
+
+    SHELL ["/bin/bash", "-c"]
+
+Normalmente, o Docker usa o /bin/sh como shell padrão, mas nesta linha, estamos especificando que o /bin/bash será usado, com a opção -c para executar os comandos.
+
+Isso é útil quando você precisa executar scripts bash ou usar recursos específicos do Bash durante a construção da imagem. Ao definir o Bash como shell padrão, você pode ter certeza de que todos os comandos e scripts serão executados corretamente.
+
+Então, em resumo:
+
+FROM ubuntu:22.04: Usa a imagem base do Ubuntu 22.04.
+SHELL ["/bin/bash", "-c"]: Define o Bash como o shell padrão a ser usado durante a construção da imagem.
+Essa combinação de instruções fornece uma base Ubuntu 22.04 com o Bash como shell padrão, o que pode ser útil em muitos casos de uso do Docker.
+
+### Instrucao ARG
+A instrução ARG em um Dockerfile é usada para definir uma variável de argumento que pode ser passada durante a construção da imagem.
+
+Ela tem o seguinte formato:
+
+    ARG <name>[=<default value>]
+
+Onde:
+
+- <name> é o nome da variável de argumento.
+
+- <default value> é um valor padrão opcional para a variável.
+
+Algumas características importantes sobre a instrução ARG:
+
+- Acesso durante a construção: As variáveis de argumento definidas com ARG podem ser acessadas durante o processo de construção da imagem, ou seja, dentro das outras instruções do Dockerfile.
+
+- Passagem de valores: Quando você executa o comando docker build, você pode passar valores para as variáveis de argumento usando a opção --build-arg <varname>=<value>.
+
+- Valor padrão: Se um valor padrão for definido na instrução ARG, esse valor será usado caso nenhum valor seja passado durante a construção.
+
+- Escopo: As variáveis de argumento têm escopo apenas durante a construção da imagem. Elas não são mantidas no contêiner resultante.
+
+Exemplo de uso:
+
+    ARG APP_VERSION=1.0
+    FROM ubuntu:22.04
+    COPY app_files /app
+    RUN ./install_app.sh --version $APP_VERSION
+Neste exemplo, APP_VERSION é definida como uma variável de argumento com um valor padrão de 1.0. Esse valor pode ser substituído durante a construção da imagem usando --build-arg APP_VERSION=2.0.
+
+Dessa forma, a instrução RUN pode acessar o valor da variável APP_VERSION durante a construção da imagem.
+
+A instrução ARG DEBIAN_FRONTEND=noninteractive é usada em Dockerfiles para definir uma variável de ambiente chamada DEBIAN_FRONTEND com o valor noninteractive.
+
+    ARG DEBIAN_FRONTEND=noninteractive
+
+Essa variável é específica para sistemas baseados no Debian, incluindo o Ubuntu, e tem o objetivo de evitar interações interativas durante a instalação de pacotes.
+
+Quando o DEBIAN_FRONTEND é definido como noninteractive, os pacotes do Debian/Ubuntu serão instalados de forma não interativa, ou seja, sem exibir prompts ou perguntas que exigem entrada do usuário.
+
+Isso é útil em ambientes de containerização, como o Docker, pois evita que o processo de construção da imagem fique travado esperando por interações do usuário.
+
+Alguns benefícios de usar DEBIAN_FRONTEND=noninteractive em um Dockerfile:
+
+- Automatização da construção: A construção da imagem fica totalmente automatizada, sem interrupções.
+
+- Redução do tamanho da imagem: Ao evitar a instalação de pacotes desnecessários, o tamanho final da imagem Docker é menor.
+
+- Reprodutibilidade: A construção da imagem fica mais determinística e reproduzível, pois não há dependência de intervenção humana.
+
+Então, a instrução ARG DEBIAN_FRONTEND=noninteractive é uma forma de configurar o ambiente de construção do Dockerfile para que a instalação de pacotes Debian/Ubuntu seja feita de maneira não interativa.
+
+### Instrucao ENV
+Essas instruções ENV no Dockerfile definem várias variáveis de ambiente que podem ser úteis em um ambiente de desenvolvimento ou implantação de uma aplicação Python.
+
+Vamos entender o que cada uma delas faz:
+
+ENV GIT_SSL_NO_VERIFY=true
+
+Essa variável desativa a verificação SSL/TLS ao usar o Git durante a construção da imagem. Isso pode ser útil se sua aplicação precisar fazer clonagem de repositórios Git que usam certificados auto-assinados.
+ENV PYTHONDONTWRITEBYTECODE=1
+
+Essa variável evita que o Python gere arquivos de bytecode .pyc durante a execução da aplicação. Isso pode ser útil para reduzir o tamanho da imagem Docker.
+ENV PYTHONUNBUFFERED=1
+
+Essa variável faz com que a saída do Python seja desejada sem buffering. Isso pode ajudar a obter um feedback mais imediato durante a execução da aplicação.
+ENV PYTHONUTF8=1
+
+Essa variável força o Python a usar a codificação UTF-8 por padrão. Isso é importante para garantir o correto manuseio de caracteres Unicode.
+ENV PIP_NO_CACHE_DIR=off
+
+Essa variável desativa o cache de pacotes do pip durante a instalação de dependências. Isso pode ser útil para forçar o download das últimas versões dos pacotes, evitando problemas de cache.
+Essas configurações de variáveis de ambiente podem ajudar a melhorar o desempenho, o tamanho da imagem e o comportamento geral da sua aplicação Python em um ambiente Docker.
+
+É importante entender o propósito de cada uma delas e avaliar se elas se aplicam ao seu caso de uso específico.
+
+### Instrucao RUN
+O comando que você mencionou é uma instrução RUN em um Dockerfile, e ele realiza as seguintes ações:
+
+No caso 
+
+    RUN apt-get update \
+         && apt-get install --assume-yes --no-install-recommends ca-certificates
+
+- apt-get update:
+
+    - Essa parte do comando atualiza a lista de pacotes disponíveis no repositório do sistema operacional baseado em Debian (como o Ubuntu).
+
+    - Isso é importante para garantir que os pacotes mais recentes estejam disponíveis para instalação.
+
+- apt-get install --assume-yes --no-install-recommends ca-certificates:
+
+    - Essa parte do comando instala o pacote ca-certificates.
+
+    - A opção --assume-yes faz com que o comando seja executado de forma não interativa, aceitando automaticamente todas as confirmações necessárias.
+
+    - A opção --no-install-recommends evita a instalação de pacotes recomendados, reduzindo o número de pacotes instalados e, consequentemente, o tamanho da imagem Docker.
+
+    - O pacote ca-certificates é importante para fornecer os certificados de autoridade de certificação confiáveis, necessários para conexões HTTPS seguras.
+
+Então, esse comando garante que a lista de pacotes esteja atualizada e instala o pacote ca-certificates, que é essencial para muitas aplicações que precisam se conectar a serviços web seguros.
+
+Essa é uma prática comum em Dockerfiles, pois garante que a imagem tenha os pacotes básicos necessários para o funcionamento da aplicação, sem instalar pacotes desnecessários
