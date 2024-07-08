@@ -20,15 +20,31 @@ Entretanto, como foi visto, o docker tem uma gama enorme de bibliotecas que são
 
 No caso, vamos ver como podemos converter a aplicação em um image. Para isso, precisamos criar um arquivo chamado Dockerfile. Basicamente, o Dockerfile é o arquivo e o núcleo onde vc consegue gerenciar de qual forma vc vai querer que ocorra as conversões para image e que tipo de comandos vc quer que o terminal faça depois que ocorre alguns processos ou quais pastas vc quer considerar da aplicação, etc.... Ou seja, é o controle central onde vc pode falar quem vai ou não ser considerado e como será considerado para o processo de geração da imagem.
 
-Criado o Dockerfile (vamos ter uma seção em que vamos estudar cada comando que foi implementado dentro do Dockerfile para entender o gerenciamento) vamos precisar colocar no terminal com o diretório aberto o comando "docker build -t hi-docker .", onde o "hi-docker" será o nome da minha imagem e o "." (ponto) para referenciar que a imagem deverá ser criado a partir do diretório em que eu estou aberto pelo terminal (diretório local), no caso, Docker.
+Criado o Dockerfile (vamos ter uma seção em que vamos estudar cada comando que foi implementado dentro do Dockerfile para entender o gerenciamento) vamos precisar colocar no terminal com o diretório aberto o comando 
+
+    docker build -t hi-docker .
+    
+onde o "hi-docker" será o nome da minha imagem e o "." (ponto) para referenciar que a imagem deverá ser criado a partir do diretório em que eu estou aberto pelo terminal (diretório local), no caso, Docker.
 
 Feito o processo acima, se vc abrir o Docker Desktop, na aba images constará a imagem que vc criou, hi-docker.
 
-Podemos verificar as imagens que foram criado colocando o comando "docker images" pelo terminal. Esse comando listará todos as imagens foram criadas e estão sendo listadas exatamente da forma como se encontra no Docker Desktop.
+Podemos verificar as imagens que foram criado colocando o comando
+
+    docker images
+    
+pelo terminal. Esse comando listará todos as imagens foram criadas e estão sendo listadas exatamente da forma como se encontra no Docker Desktop.
+
+Para excluir uma imagem docker
+
+    docker rmi (id da imagem docker)
 
 No caso, dentro da imagem, hi-docker, que acabamos de criar, dentro dela foi colocado um comando para instalar uma linguagem x de programação na imagem que será criada e que será rodado no container do Docker.
 
-Agora, vamos precisar rodar a imagem que criamos. No caso, precisamos rodar pelo terminal o comando "docker run (nome da imagem que foi criada)". Como resultado, ocorreu o mesmo que aconteceu quando eu rodei pelo terminal o comando "node app.js" visto que no iMac que estou usando tem o node instalado.
+Agora, vamos precisar rodar a imagem que criamos. No caso, precisamos rodar pelo terminal o comando
+
+    docker run (nome da imagem que foi criada)
+    
+Como resultado, ocorreu o mesmo que aconteceu quando eu rodei pelo terminal o comando "node app.js" visto que no iMac que estou usando tem o node instalado.
 
 Além disso, quando olhamos pelo Docker Desktop na aba Containers, podemos verificar que foi criado um container para rodarmos a imagem que foi criado.
 
