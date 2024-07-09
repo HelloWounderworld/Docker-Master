@@ -9,13 +9,19 @@ No caso, podemos, sim, rodar um Linux dentro de um container. O que significa qu
 
 - Primeiro, vamos verificar quais tipos de containers estão rodando no docker ou quantos containers foram criadas, o que inclui aquelas que não estão rodando mas estão lá, claro precisa estar com o Docker Desktop aberto:
 
-    - docker ps - serve para verificar quais containers estão rodando
+        docker ps
+    
+    serve para verificar quais containers estão rodando.
 
-    - docker ps -a - Lista todos os containers existentes.
+        docker ps -a
+    
+    Lista todos os containers existentes.
 
 - Segundo, vamos pegar a distribuição Linux do Docker Hub rodando o comando pelo terminal. Vale ressaltar que a forma como será rodado o Ubuntu se chama modo interativo (interactive mode):
-
-    - docker run -it (nome da ditribuição, neste caso, apenas, "ubuntu") - Não só baixa a distribuição como tbm já roda criando um terminal linux Ubuntu dentro do terminal que vc está utilizando
+    
+        docker run -it (nome da ditribuição, neste caso, apenas, "ubuntu")
+        
+    Não só baixa a distribuição como tbm já roda criando um terminal linux Ubuntu dentro do terminal que vc está utilizando
 
         Unable to find image 'ubuntu:latest' locally
         latest: Pulling from library/ubuntu
