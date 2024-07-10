@@ -101,3 +101,7 @@
 - docker cp (origem) (destino) - docker cp kiwi2:/app/text.txt ., no caso a origem é kiwi2:/app/text.txt e o destino é no meu local ".".
 
 - Com o mesmo comando acima, podemos criar uma cópia de um arquivo do local para alguma aplicação que roda de forma interativa.
+
+## Passo a passo de como acessar o container remotamente pelo VSCode/Cursor para abrir os seus respectivos codigos fontes:
+
+    https://code.visualstudio.com/docs/devcontainers/attach-container#:~:text=To%20attach%20to%20a%20Docker,you%20want%20to%20connect%20to.
