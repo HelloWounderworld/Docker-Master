@@ -64,7 +64,76 @@ Para confirmação disso, bastaria colocar o comando "ls" nesse terminal Linux p
 
 - apt remove (nome do pacote) - remove o pacote instalado.
 
-## Vamos agora aprender sobre o sistema de arquivos do Linux e suas hierarquias:
+## Vamos agora aprender sobre o sistema de arquivos do Linux e suas hierarquias (FHS):
+
+### FHS (Filesystem Hierarchy Standard)
+O Filesystem Hierarchy Standard (FHS) é um padrão que define a estrutura e a organização dos diretórios e arquivos em sistemas operacionais baseados em Unix, incluindo o Linux. Esse padrão é amplamente adotado e segue as melhores práticas para a organização do sistema de arquivos.
+
+Vamos explorar os detalhes do FHS:
+
+1. Objetivo do FHS:
+
+    - O objetivo principal do FHS é estabelecer uma estrutura de diretórios padrão, permitindo que aplicativos, scripts e usuários possam interagir de maneira previsível e consistente com o sistema de arquivos.
+
+    - Isso facilita a portabilidade de software entre diferentes distribuições Linux/Unix, pois os programas podem confiar na existência e no propósito de diretórios específicos.
+
+2. Estrutura de diretórios:
+
+    - O FHS define uma hierarquia de diretórios padrão, com cada diretório tendo um propósito específico.
+
+    - Os principais diretórios definidos pelo FHS incluem:
+
+        - /: O diretório raiz, que contém toda a estrutura de diretórios.
+
+        - /bin: Binários essenciais do sistema, como comandos básicos.
+
+        - /etc: Arquivos de configuração do sistema.
+
+        - /home: Diretórios pessoais dos usuários.
+
+        - /lib: Bibliotecas compartilhadas essenciais.
+
+        - /opt: Aplicativos e pacotes opcionais.
+
+        - /tmp: Diretório temporário.
+
+        - /usr: Programas e arquivos de dados de usuários.
+
+        - /var: Arquivos de dados variáveis, como logs e spool.
+
+3. Propósito dos diretórios:
+
+    - Cada diretório definido pelo FHS tem um propósito específico, o que ajuda a manter a organização e a clareza do sistema de arquivos.
+
+    - Por exemplo, o /etc é usado para armazenar arquivos de configuração do sistema, enquanto o /var/log é usado para armazenar arquivos de log.
+
+4. Permissões e propriedade:
+
+    - O FHS também define as permissões e a propriedade padrão de alguns diretórios, como o /etc sendo de propriedade do root e com permissões restritas.
+
+    - Isso ajuda a garantir a integridade e a segurança do sistema.
+
+5. Versionamento e compatibilidade:
+
+    - O FHS é atualizado periodicamente para refletir as mudanças e as melhores práticas no ecossistema Linux/Unix.
+
+    - As atualizações do FHS buscam manter a compatibilidade com versões anteriores, evitando quebras significativas em aplicativos e scripts existentes.
+
+6. Adoção e aplicação:
+
+    - Embora o FHS seja um padrão recomendado, sua adoção é voluntária pelas distribuições Linux/Unix.
+
+    - No entanto, a maioria das distribuições segue o FHS, pois isso facilita a portabilidade de software e a manutenção do sistema.
+
+O Filesystem Hierarchy Standard é uma peça fundamental na organização e na padronização do sistema de arquivos em sistemas operacionais baseados em Unix, incluindo o Linux. Sua adoção generalizada ajuda a manter a consistência, a portabilidade e a manutenibilidade do ecossistema Linux/Unix.
+
+#### Referencias
+
+    https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+
+    https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
+
+### Principais diretorios do FHS:
 Essas sao os principais diretorios que encontramos no Linux
 
 - /: O diretório raiz, que é o ponto de partida de toda a estrutura de diretórios.
