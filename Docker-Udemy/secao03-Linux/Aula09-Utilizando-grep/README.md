@@ -126,7 +126,22 @@ Quando vc acrescenta "-l" na busca, ele apenas listara os arquivos em que a pala
 
     grep -l 'system' *
 
-## 
+## Acrescentando -c
+Quando vc acrescenta "-c" na busca, ele apenas mostra a quantidade que se encontra da busca em cada arquivo
+
+    grep -c 'system' *
+
+O ponto e que como sera feita a varredura geral nos arquivos atuais, na busca acima, entao sera exibido ate os arquivos que nao contem a tal palavra buscada e sera contabilizado como 0.
+
+## Acrescentando -o
+Quando vc acrescenta "-o" na busca, ela apenas mostra a parte da linha que se combinou ignorando o restante das palavras da mesma linha.
+
+    grep -o 'system' *
+
+## Acrescentando -a
+Quando vc acrescenta "-a" na busca, ela realiza a busca apenas nos arquivos binarios
+
+    grep -a 'system' *
 
 ## Referencia
 

@@ -1,5 +1,5 @@
 # Gerenciando processos:
-- ps - vc consegue visualizar os processos que estão rodando.
+- ps - vc consegue visualizar os processos que estão rodando. Ate os processos conhecidos como processo zumbi/mortos.
 
 - sleep (numero) - é uma forma de exibir a linha de comando do terminal após algum tempo.
 
