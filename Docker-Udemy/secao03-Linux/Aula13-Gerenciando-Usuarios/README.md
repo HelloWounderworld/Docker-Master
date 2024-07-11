@@ -1,4 +1,6 @@
 # Gerenciando Usuários:
+Linux Bible - Chapter 7
+
 - useradd - Serve para poder add algum novo usuário e não basta somente esse comando. Mas tbm, precisaria colocar mais algum outro comando. Para verificar isso basta colocar useradd no terminal e dar o enter.
 
 - useradd -m (algum nome) - cria o usuário com o nome. Mas vc consegue fazer isso mediante de que vc seja o root.

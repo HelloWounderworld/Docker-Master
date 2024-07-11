@@ -1,11 +1,12 @@
 # Permissões de Arquivos: 
-- Quando damos ls -l, na lista é mostrado uma combinação de "r", "w", "d" e "x", respectivamente, read, write, directory e execute. Eles indicam os tipos de permissões que o usuário pode realizar sobre o arquivo, diretório e o programa que existem. Tudo isso no primeiro bloco que está dividido com um traço.
 
-- Agora, no segundo bloco, depois do traço de um conjunto de permissões, existe as permissões que os grupos existentes podem realizar.
+Linux Bible - Chapter 7
 
-- Agora, no terceiro bloco, reside as permissões do "everyone", ou seja, as permissões que todo mundo tem.
+## Permissoes e suas simbologias
+Quando damos ls -l, na lista é mostrado uma combinação de "r", "w", "d" e "x", respectivamente, read, write, directory e execute. Eles indicam os tipos de permissões que o usuário pode realizar sobre o arquivo, diretório e o programa que existem. Tudo isso no primeiro bloco que está dividido com um traço.
 
-- chmod u+(alguma permissão) (arquivo que vc quer add a permissão) - Serve para add alguma permissão de um usuário sobre um arquivo.
+## chmod
+chmod u+(alguma permissão) (arquivo que vc quer add a permissão) - Serve para add alguma permissão de um usuário sobre um arquivo.
 
 ## chown
 Certainly! The chown command in Linux is used to change the ownership of a file or directory. It stands for "change owner" and is a powerful tool for managing file permissions and access control.

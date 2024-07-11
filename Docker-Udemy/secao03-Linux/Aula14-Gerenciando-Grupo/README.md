@@ -1,4 +1,6 @@
 # Gerenciando Grupos:
+Linux Bible - Chapter 7
+
 - cat /etc/group - Serve para verificar quais grupos compostos de usuários existem.
 
 - Todo usuário criado pelo useradd acabam sendo adicionados aos grupos primários ou secundários.
