@@ -1,0 +1,2 @@
+# Configurando Variáveis:
+- Agora, vamos como se usa o ENV, no caso, ela serve para quando queremos dizer em qual ambiente queremos que ela rode, como API. A forma como se implementa seria API_URL="o link url".
